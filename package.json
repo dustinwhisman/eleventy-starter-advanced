@@ -6,7 +6,8 @@
   "scripts": {
     "prestart": "run-p clean node-version",
     "prebuild": "run-p clean node-version",
-    "start": "run-p eleventy:dev sass:dev postcss:watch js:dev",
+    "start": "netlify dev --command \"npm run dev\"",
+    "dev": "run-p eleventy:dev sass:dev postcss:watch js:dev",
     "build": "run-s eleventy:build sass:build postcss:build js:build",
     "clean": "rimraf dist",
     "eleventy:dev": "NODE_ENV=development eleventy --serve",
@@ -34,14 +35,18 @@
     "@babel/core": "^7.15.5",
     "@babel/preset-env": "^7.15.6",
     "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-node-resolve": "^13.0.5",
+    "@rollup/plugin-replace": "^3.0.0",
     "check-node-version": "^4.1.0",
     "chokidar-cli": "^3.0.0",
     "cssnano": "^5.0.8",
+    "dotenv": "^10.0.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-jest": "^24.5.0",
     "jest": "^27.2.4",
+    "netlify-cli": "^6.9.6",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.3.8",
     "postcss-cli": "^9.0.1",
@@ -53,5 +58,10 @@
     "stylelint-config-sass-guidelines": "^8.0.0",
     "stylelint-config-standard": "^22.0.0",
     "terser": "^5.9.0"
+  },
+  "dependencies": {
+    "firebase": "^9.1.0",
+    "firebase-admin": "^9.12.0",
+    "middy": "^0.36.0"
   }
 }

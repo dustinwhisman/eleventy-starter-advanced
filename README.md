@@ -58,8 +58,9 @@ Things to delete:
 1. Run `npm install`
 1. Run `npm start`. This will
   - Build project files
-  - Start the development server (`http://localhost:8080`)
+  - Start the development server (`http://localhost:8888`)
   - Run watch tasks on Sass/JS files as well as your templates
+  - Listen for requests to serverless functions
 
 ### File Structure
 
@@ -85,7 +86,7 @@ The `scss` folder already contains some basic, brutalist styles. You can rip
 those out and replace them with your own if you like, use them as-is, or extend
 them, but they should be decent enough to get you started with simple, blog-like
 pages without much effort. When you run the project, check out
-`http://localhost:8080/docs` to see more about the default styles.
+`http://localhost:8888/docs` to see more about the default styles.
 
 #### Pages
 
@@ -154,11 +155,18 @@ layout: layouts/default.njk
 ```
 
 However, if you want to override blocks, it's better to extend the layout. See
-the docs for [templates](http://localhost:8080/docs/templates) for more info.
+the docs for [templates](http://localhost:8888/docs/templates) for more info.
 
 ```njk
 {% extend "layouts/default.njk" %}
 ```
+
+#### Functions
+
+The `functions` folder contains all the serverless functions that can be used by
+the site. The name of the file determines the path, so for example, `hello.js`
+can be accessed by fetching `/api/hello`. Behind the scenes, Netlify, or Netlify
+CLI will redirect the request and respond accordingly based on the function.
 
 ## Project Details
 
@@ -273,3 +281,59 @@ Failed audits will block pull requests from being merged. Out of the box, you
 should see perfect 100/100 scores, so keep an eye on that as you develop, and
 make sure to investigate any errors or recommendations that are surfaced by
 Lighthouse.
+
+### Firebase Authentication
+
+This project uses Firebase for authentication, and it protects serverless
+endpoints through middleware. The code part should be taken care of already, but
+you will need to set up some things in Firebase to get up and running.
+
+#### The Firebase Console
+
+If you don't have a [Firebase](https://console.firebase.google.com) account
+already, you will need to sign up for one. There's a generous free tier, so
+unless you are going to have loads of users, it should be sufficient.
+
+##### Creating a Project
+
+From the console, add a project, and give it a name. Your call if you want to
+enable Google Analytics, but none of the code in this project is written to
+support it. Once Firebase is finished setting the project up, you should see
+some "Get started" message and options for adding Firebase to your app. You want
+the Web option.
+
+From there, you can add an app nickname, and choose whether to use Firebase
+Hosting (probably not, since this assumes Netlify as your hosting provider).
+Once you've registered the app, you should see a code sample with API keys and
+other project information. You'll want to copy those values and add them to your
+`.env` file (see [`.env.example`](./.env.example)) for more information.
+
+##### Configuring Authentication
+
+Now you should be ready to set up authentication. In the Authentication
+settings, add Email/Password as your provider. Enable Email/Password and the
+"Email link (passwordless sign-in)" options, then save.
+
+From here, you can add whatever domains should be authorized. `localhost` should
+be there by default, but you'll also want to add any staging, preview, or
+production domains that your site will exist on. If you don't have a domain set
+up yet, you can come back to this later.
+
+You can also edit the default email templates if you wish. One thing you'll want
+to do is change the public-facing name of your project so users don't see a
+garbled string with a bunch of numbers as the site name when they try to log in.
+You should be able to find that under general Project Settings as "Public-facing
+name".
+
+##### Finishing Up
+
+There are other settings you can change here that aren't strictly necessary, but
+might be helpful, such as "Default GCP resource location" and "Support email".
+
+From Project Settings, you'll need to go to Service Accounts and generate a new
+private key. This will create a JSON file with a bunch of sensitive information.
+Once you download the file, you'll want to remove any newlines and copy the
+string into your `.env` file for the FIREBASE_ADMIN_CREDENTIALS variable.
+
+With all of that done, you should be able to log in to your site, hit protected
+endpoints, and manage your account without issue.
