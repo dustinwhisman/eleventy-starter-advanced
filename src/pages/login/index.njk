@@ -39,7 +39,6 @@ description: Log in to an existing account or sign up. Either way, all that is r
   </div>
 {% endblock %}
 
-{% block authScripts %}
-  <script src="/assets/js/bundled/login.js" type="module"></script>
-  <script src="/assets/js/legacy/login.js" nomodule></script>
+{% block scripts %}
+  <script src="/assets/js/login.js" type="module"></script>
 {% endblock %}

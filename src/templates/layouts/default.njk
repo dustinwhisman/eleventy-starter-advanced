@@ -39,12 +39,7 @@
       {% endblock %}
     </div>
     {% include "partials/dark-mode-favicon.njk" %}
-    {% include "partials/update-auth-links.njk" %}
-    {% block authScripts %}
-      {# by default, do the simplest thing – pages with more auth stuff will replace this #}
-      <script src="/assets/js/bundled/auth-state.js" type="module"></script>
-      <script src="/assets/js/legacy/auth-state.js" nomodule></script>
-    {% endblock %}
+    <script src="/assets/js/auth-state.js" type="module"></script>
     {% block scripts %}{% endblock %}
     {% include "partials/service-worker.njk" %}
   </body>

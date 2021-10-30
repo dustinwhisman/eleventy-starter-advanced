@@ -1,9 +1,6 @@
-import { observeAuthState } from './utilities/auth/observe-auth-state.js';
 import { sendSignInLink } from './utilities/auth/send-sign-in-link.js';
 
 (() => {
-  observeAuthState();
-
   const handleSuccess = (email) => {
     window.localStorage.setItem('emailForSignIn', email);
 

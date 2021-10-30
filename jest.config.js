@@ -4,6 +4,6 @@ module.exports = {
     'mjs',
   ],
   transform: {
-    '^.+\\.(js|mjs)$': 'babel-jest',
+    '^.+\\.(js)$': 'babel-jest',
   },
 };

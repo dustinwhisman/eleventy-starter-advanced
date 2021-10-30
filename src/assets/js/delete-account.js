@@ -1,4 +1,3 @@
-import { observeAuthState } from './utilities/auth/observe-auth-state.js';
 import { reauthenticateUser } from './utilities/auth/reauthenticate-user.js';
 import { deleteAccount } from './utilities/auth/delete-account.js';
 
@@ -43,6 +42,4 @@ import { deleteAccount } from './utilities/auth/delete-account.js';
       );
     }
   });
-
-  observeAuthState();
 })();

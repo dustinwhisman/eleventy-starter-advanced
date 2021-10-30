@@ -1,5 +1,4 @@
 import { auth } from './utilities/auth/auth.js';
-import { observeAuthState } from './utilities/auth/observe-auth-state.js';
 import { signUserOut } from './utilities/auth/sign-user-out.js';
 import { sendSignInLink } from './utilities/auth/send-sign-in-link.js';
 
@@ -85,6 +84,4 @@ import { sendSignInLink } from './utilities/auth/send-sign-in-link.js';
       );
     }
   });
-
-  observeAuthState();
 })();

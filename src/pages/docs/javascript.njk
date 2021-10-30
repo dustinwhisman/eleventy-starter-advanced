@@ -108,10 +108,5 @@ console.log(subtract(5, 2));
 
 {% block scripts %}
   <!-- serve bundled script to modern browsers -->
-  <script src="/assets/js/bundled/example.js" type="module"></script>
-  <script src="/assets/js/legacy/example.js" nomodule></script>
-
-  <!-- serve ES Modules to modern browsers -->
-  <script src="/assets/js/example-2.mjs" type="module"></script>
-  <script src="/assets/js/legacy/example-2.js" nomodule></script>
+  <script src="/assets/js/example.js" type="module"></script>
 {% endblock %}

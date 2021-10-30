@@ -38,7 +38,6 @@ description: Delete your account from here. This is irreversible, so make sure i
   </div>
 {% endblock %}
 
-{% block authScripts %}
-  <script src="/assets/js/bundled/delete-account.js" type="module"></script>
-  <script src="/assets/js/legacy/delete-account.js" nomodule></script>
+{% block scripts %}
+  <script src="/assets/js/delete-account.js" type="module"></script>
 {% endblock %}

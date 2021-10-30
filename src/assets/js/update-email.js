@@ -1,4 +1,3 @@
-import { observeAuthState } from './utilities/auth/observe-auth-state.js';
 import { reauthenticateUser } from './utilities/auth/reauthenticate-user.js';
 import { updateUserEmail } from './utilities/auth/update-user-email.js';
 
@@ -43,6 +42,4 @@ import { updateUserEmail } from './utilities/auth/update-user-email.js';
       );
     }
   });
-
-  observeAuthState();
 })();
