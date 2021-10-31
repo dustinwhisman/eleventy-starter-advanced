@@ -1,9 +1,9 @@
-# Eleventy Starter
+# Eleventy Starter (Advanced)
 
 First time setup:
 
 - [Click this link and make a new
-repo.](https://github.com/dustinwhisman/eleventy-starter/generate) This will
+repo.](https://github.com/dustinwhisman/eleventy-starter-advanced/generate) This will
 open a form for you to create a new repo with all the files from this one.
 
 - Out of the box, you should have:
@@ -11,7 +11,7 @@ open a form for you to create a new repo with all the files from this one.
     catch-all 404 page
   - [x] Sass support with minimal/brutalist styles ready to go, including dark
     mode
-  - [x] JS bundling with modern/legacy builds
+  - [x] JS bundling, minification, and code splitting
   - [x] Minimal PWA requirements already met
   - [x] A service worker with precaching and a basic
     cache-falling-back-to-network strategy in place
@@ -46,8 +46,10 @@ Things to update:
 - [`.lighthouserc.js`](./.lighthouserc.js): change the list of URLs to match pages that you want audited by Lighthouse, or delete them and uncomment the `maxAutodiscoverUrls` line to audit all pages
 
 Things to delete:
-- `src/assets/js/*`: the example JS files that aren't actually useful
-- `src/pages/blog`: example blog entries (the index page might still be useful, though)
+- `src/assets/js/example.js`: the example JS file that isn't actually useful, as
+  well as the `add.js` and `subtract.js` utility JS files
+- `src/pages/blog`: example blog entries (the index page might still be useful,
+  though)
 - `src/pages/docs`: documentation geared toward developers
 - Any other pages or templates that won't be needed
 
@@ -204,24 +206,20 @@ follows:
 
 ### JavaScript
 
-JavaScript files are bundled by Rollup from `src/assets/js` into modern or
-legacy bundles in `dist/assets/js/bundled` or `dist/assets/js/legacy`,
-respectively. Legacy bundles use Babel to transpile JS into syntax understood by
-older browsers. To deliver the right scripts to the right browsers, follow the
-module/nomodule pattern:
+JavaScript files are processed by esbuild, which bundles/minifies JS and handles
+code splitting. The output is intended for browsers that support ES modules, so
+if you need support for legacy browsers, you'll need to add support yourself. If
+you do generate legacy builds, be sure to use the `module/nomodule` pattern to
+prevent browsers from loading/running the wrong scripts.
+
+By convention, any files in `src/assets/js` will be treated as entry points, and
+the processed output will be written to `dist/assets/js`.
 
 ```html
-<script src="/dist/assets/js/bundled/scripts.js" type="module"></script>
+<script src="/dist/assets/js/scripts.js" type="module"></script>
+
+<!-- use this for legacy bundles or fallbacks for older browsers -->
 <script src="/dist/assets/js/legacy/scripts.js" nomodule></script>
-```
-
-If you don't want to serve bundled or transpiled versions of your scripts, we
-recommend using the `.mjs` file extension for your JS files, and using
-`type=module` in your `script` tags. This may improve performance, depending on
-the size and number of files that would otherwise be bundled together.
-
-```html
-<script src="/dist/assets/js/non-bundled-script.mjs" type="module"></script>
 ```
 
 ### Linting and Testing

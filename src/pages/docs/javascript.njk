@@ -12,16 +12,17 @@ tags: docs
       Using JavaScript
     </h1>
     <p>
-      This project handles JavaScript by convention. Putting a <code>.js</code> or
-      <code>.mjs</code> file in <code>src/assets/js</code> will automatically
-      signify it as an entry point for bundling. Any subfolders will not be used
-      as entrypoints, so it's recommended to organize your JS in subfolders, and
+      This project handles JavaScript by convention. Putting a <code>.js</code>
+      file in <code>src/assets/js</code> will automatically signify it as an
+      entry point for esbuild to process. Any subfolders will not be used as
+      entrypoints, so it's recommended to organize your JS in subfolders, and
       then import what you need into files at the <code>src/assets/js</code>
       level.
     </p>
     <p>
-      For example, given this structure, two bundles would be created for
-      <code>example.js</code> and <code>example-2.mjs</code>.
+      For example, given this structure, an output file would be created for
+      <code>example.js</code>, but not for <code>add.js</code> or
+      <code>subtract.js</code>.
     </p>
 <pre>
 src/assets/js/
@@ -29,80 +30,57 @@ src/assets/js/
 |  |– add.js
 |  |– subtract.js
 |– example.js
-|– example-2.mjs
 </pre>
 
     <p>
-      Those bundled JS files would land in <code>dist/assets/js/bundled</code>,
-      keeping their original names and file extensions.
+      The output JS files would land in <code>dist/assets/js</code>, keeping
+      their original names and file extensions. With code splitting, there may
+      be additional files written there with names like
+      <code>chunk-5X6LSU5U.js</code>. Those chunks include code that's shared
+      between entrypoints, and you don't need to do anything special with them.
     </p>
 <pre>
-dist/assets/js/bundled/
+dist/assets/js/
 |– example.js
-|– example-2.mjs
 </pre>
 
     <p>
-      Include the file in a standard <code>script</code> element, and you're good
-      to go.
+      Include the file in a standard <code>script</code> element, and you're
+      good to go.
     </p>
 <pre>
-&lt;script src="/assets/js/bundled/example.js"&gt;&lt;/script&gt;
-</pre>
-
-    <h2>
-      Non-Bundled Scripts
-    </h2>
-    <p>
-      What if you don't want to bundle your JS, though? Support for ES modules is
-      pretty good these days, so it may not make sense to bundle everything. To
-      handle that use-case, your <code>src/assets/js</code> folder is copied to
-      <code>dist/assets/js</code>, so you can use those files directly.
-    </p>
-    <p>
-      For safety, make sure to specify the file extension in your imports, so
-      browsers will know how to find the correct files (if you forget, eslint will
-      yell at you). Its recommended to use the <code>.mjs</code> extension to make
-      it clear that you don't intend to use the bundled version, even though one
-      will be created at build time.
-    </p>
-    <p>
-      You will also need to specify <code>type="module"</code> in your
-      <code>script</code> tag.
-    </p>
-<pre>
-// example-2.mjs
-import { add } from './utilities/add.js';
-import { subtract } from './utilities/subtract.js';
-
-console.log(add(4, 4));
-console.log(subtract(5, 2));
-
-&lt;!-- html --&gt;
-&lt;script src="/assets/js/example-2.mjs" type="module"&gt;&lt;/script&gt;
+&lt;script src="/assets/js/example.js" type="module"&gt;&lt;/script&gt;
 </pre>
 
     <h2>
       Legacy Bundles
     </h2>
     <p>
+      To keep project maintenance at a minimum, and to keep up with the times,
+      legacy bundles are not supported by default in this project. If you need
+      to support older browsers, you'll need to bring your own build process for
+      legacy bundles.
+    </p>
+    <p>
       In case you need to support an older browser that doesn't support ES
       Modules, you can use the module/nomodule pattern to serve modern JS to
       modern browsers and legacy JS to older browsers (lookin' at you IE11).
     </p>
     <p>
-      Every entrypoint is bundled twice, once for modern browsers, and once for
-      legacy browsers.
+      The <code>type="module"</code> attribute prevents non-supporting browsers
+      from trying to run the script, and the <code>nomodule</code> attribute
+      tells modern browsers to not even bother with downloading the script.
     </p>
 <pre>
-&lt;!-- serve bundled script to modern browsers --&gt;
-&lt;script src="/assets/js/bundled/example.js" type="module"&gt;&lt;/script&gt;
+&lt;script src="/assets/js/example.js" type="module"&gt;&lt;/script&gt;
 &lt;script src="/assets/js/legacy/example.js" nomodule&gt;&lt;/script&gt;
-
-&lt;!-- serve ES Modules to modern browsers --&gt;
-&lt;script src="/assets/js/example-2.mjs" type="module"&gt;&lt;/script&gt;
-&lt;script src="/assets/js/legacy/example-2.js" nomodule&gt;&lt;/script&gt;
 </pre>
+
+    <p>
+      Even if you aren't fully supporting older browsers, you can use this
+      pattern to provide a fallback experience to avoid your site being
+      completely broken for users.
+    </p>
   </article>
 {% endblock %}
 
