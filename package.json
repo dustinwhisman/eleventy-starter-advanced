@@ -18,10 +18,12 @@
     "js:build": "NODE_ENV=production node tasks/build-js.js",
     "lint:css": "stylelint src/**/*.css src/**/*.scss",
     "lint:js": "eslint src/**/*.js functions/**/*.js functions-helpers/**/*.js --no-error-on-unmatched-pattern",
+    "lint:html": "node ./tasks/lint-html.js",
     "lint": "run-s lint:css lint:js",
     "test:js": "jest --config=jest.config.js src/assets/js/**/*js --passWithNoTests",
     "node-version": "check-node-version --package",
-    "test": "run-s test:js"
+    "test": "run-s test:js",
+    "budget": "bundlesize"
   },
   "engines": {
     "node": ">=16"
@@ -30,6 +32,7 @@
     "@11ty/eleventy": "^0.12.1",
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
+    "bundlesize": "^0.18.1",
     "check-node-version": "^4.1.0",
     "eslint": "^8.1.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -49,6 +52,7 @@
     "esbuild": "^0.13.12",
     "firebase": "^9.2.0",
     "firebase-admin": "^10.0.0",
-    "middy": "^0.36.0"
+    "middy": "^0.36.0",
+    "pa11y": "^6.0.1"
   }
 }

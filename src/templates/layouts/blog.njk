@@ -23,8 +23,8 @@
       {% block header %}
         {% include "components/header.njk" %}
       {% endblock %}
-      {% block content %}
-        <main>
+      <main role="main">
+        {% block content %}
           <article class="cmp-container cmp-stack">
             <h1>
               {{ title }}
@@ -34,10 +34,10 @@
             </p>
             {{ content | safe }}
           </article>
-        </main>
-      {% endblock %}
+        {% endblock %}
+      </main>
       {% block footer %}
-        <footer class="cmp-container">
+        <footer role="contentinfo" class="cmp-container">
           <p>
             This is the footer of the website. It and the header are separated
             from the main content of the page (and from the top/bottom of the

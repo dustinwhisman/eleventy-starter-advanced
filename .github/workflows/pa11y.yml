@@ -1,8 +1,8 @@
-name: Code Quality
+name: Lint HTML
 on: [pull_request]
 
 jobs:
-  code-quality:
+  pa11y:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -11,9 +11,7 @@ jobs:
           node-version: '16'
       - name: install npm dependencies
         run: npm ci
-      - name: lint css
-        run: npm run lint:css
-      - name: lint js
-        run: npm run lint:js
-      - name: test js
-        run: npm run test:js
+      - name: build the site
+        run: npm run build
+      - name: lint html
+        run: npm run lint:html
