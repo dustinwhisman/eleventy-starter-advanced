@@ -36,7 +36,7 @@
     "check-node-version": "^4.2.1",
     "eslint": "^8.6.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^25.3.4",
     "jest": "^27.4.5",
     "netlify-cli": "^8.6.2",
