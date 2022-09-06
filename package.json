@@ -48,7 +48,7 @@
     "stylelint-config-standard": "^25.0.0"
   },
   "dependencies": {
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.2",
     "esbuild": "^0.14.51",
     "firebase": "^9.9.1",
     "firebase-admin": "^10.3.0",
